@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='chabie',
-    version='0.1',
+    version='0.2',
     description='Comparison utility',
     author='TatchNicolas',
     author_email='TatchNicolas@users.noreply.github.com',
