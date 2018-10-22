@@ -1,7 +1,7 @@
 from typing import Dict, List, Tuple
 
 
-def compare_dicts(a: Dict, b: Dict, key: List[Tuple] = None) -> bool:
+def compare_dicts(a: Dict, b: Dict, key_list: List[Tuple] = None) -> bool:
 
     if type(a) != type(b):
         return False
