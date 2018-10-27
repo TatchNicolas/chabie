@@ -1,11 +1,11 @@
 from typing import Dict, List, Tuple, Callable
 
 
-Key = Tuple(type, Callable)
+Key = List[Tuple[type, Callable]]
 
 
 def compare_dicts(a: Dict, b: Dict,
-                  custom_comp: Dict = {}, ingore: List = []) -> bool:
+                  custom_comp: Key = [], ingore: List = []) -> bool:
 
     if type(a) != type(b):
         return False
