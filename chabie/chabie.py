@@ -31,6 +31,8 @@ def compare_dicts(a: Dict, b: Dict, key_list: Dict) -> bool:
     return a == b
 
 
+# TODO type-based
+# TODO key-based
 print(
     compare_dicts(
         {'hoge': 'hoge'},
