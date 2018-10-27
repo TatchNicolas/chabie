@@ -6,7 +6,7 @@ Ignore = List[str]
 
 
 def compare_dicts(a: Dict, b: Dict,
-                  cmps: Key = [], ignore: Ignore = []) -> bool:
+                  cmps: Key = {}, ignore: Ignore = []) -> bool:
 
     if type(a) != type(b):
         return False

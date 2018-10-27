@@ -109,9 +109,9 @@ def test_ignore():
 
 def test_cmps():
     assert chabie.compare_dicts(
-        {'to_ignore': 'or', 'not_to_ignore': 'That is the question'},
-        {'to_ignore': 'OR', 'not_to_ignore': 'That is the question'},
-        cmps=(str, lambda a, b: True)
+        {'strings': 'Given the named argument below'},
+        {'strings': 'will be regarded as equal whatever the values are'},
+        cmps={str: lambda a, b: True}
     )
 
 
