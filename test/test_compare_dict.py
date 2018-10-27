@@ -1,7 +1,7 @@
 from chabie import chabie
 
 
-def test_compare_dicts():
+def test_basics():
     assert chabie.compare_dicts({}, {})
     assert chabie.compare_dicts({'a': ''}, {'a': ''})
     assert not chabie.compare_dicts({'a': ''}, {'b': ''})
@@ -105,3 +105,15 @@ def test_ignore():
         {'not_to_ignore': 'That is the question'},
         ignore=['to_ignore']
     )
+
+
+def test_cmps():
+    assert chabie.compare_dicts(
+        {'to_ignore': 'or', 'not_to_ignore': 'That is the question'},
+        {'to_ignore': 'OR', 'not_to_ignore': 'That is the question'},
+        cmps=(str, lambda a, b: True)
+    )
+
+
+def test_combinations():
+    assert False

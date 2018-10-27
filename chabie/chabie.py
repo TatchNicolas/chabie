@@ -1,7 +1,7 @@
-from typing import Dict, List, Tuple, Callable
+from typing import Callable, Dict, List
 
 
-Key = List[Tuple[type, Callable]]
+Key = Dict[type, Callable]
 Ignore = List[str]
 
 
