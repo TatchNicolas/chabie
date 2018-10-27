@@ -2,10 +2,12 @@ from typing import Dict, List, Tuple, Callable
 
 
 Key = List[Tuple[type, Callable]]
+Ignore = List[str]
 
 
+# TODO What if a key only exists in one of given dicts?
 def compare_dicts(a: Dict, b: Dict,
-                  custom_comp: Key = [], ingore: List = []) -> bool:
+                  custom_comp: Key = [], ingore: Ignore = []) -> bool:
 
     if type(a) != type(b):
         return False
@@ -27,20 +29,6 @@ def compare_dicts(a: Dict, b: Dict,
             ]
         )
 
-    print(custom_comp)
     if type(a) in custom_comp:
-        print('Look!')
         return custom_comp[type(a)](a, b)
-        # a.__eq__ = custom_comp[type(a)]
     return a == b
-
-
-# TODO type-based
-# TODO key-based
-print(
-    compare_dicts(
-        {'hoge': 'hoge'},
-        {'hoge': 'fuga'},
-        {type(''): lambda a, b: True}
-    )
-)
