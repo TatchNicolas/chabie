@@ -1,5 +1,5 @@
-from chabie.chabie import compare_dicts
+from chabie import chabie
 
 
 def test_type_based():
-    assert compare_dicts({}, {})
+    assert chabie.compare_dicts({}, {})
