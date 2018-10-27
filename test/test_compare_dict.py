@@ -76,3 +76,32 @@ def test_compare_dicts():
             ],
         }
     )
+
+
+def test_ignore():
+    assert chabie.compare_dicts(
+        {'to_ignore': 'or', 'not_to_ignore': 'That is the question'},
+        {'to_ignore': 'OR', 'not_to_ignore': 'That is the question'},
+        ignore=['to_ignore']
+    )
+    assert chabie.compare_dicts(
+        {'to_ignore': None, 'not_to_ignore': 'That is the question'},
+        {'to_ignore': 'None', 'not_to_ignore': 'That is the question'},
+        ignore=['to_ignore']
+    )
+    assert chabie.compare_dicts(
+        {
+            'to_ignore': 'Different depth of dict',
+            'not_to_ignore': 'That is the question'
+        },
+        {
+            'to_ignore': {'nested in b': [1, 2, 3]},
+            'not_to_ignore': 'That is the question'
+        },
+        ignore=['to_ignore']
+    )
+    assert chabie.compare_dicts(
+        {'to_ignore': 'or', 'not_to_ignore': 'That is the question'},
+        {'not_to_ignore': 'That is the question'},
+        ignore=['to_ignore']
+    )
