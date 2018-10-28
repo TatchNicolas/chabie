@@ -118,5 +118,15 @@ def test_types():
     )
 
 
-# def test_combinations():
-#     assert False
+def test_ignore():
+    assert chabie.compare_dicts(
+        {
+            'To ignore this key': 'the value does not matter',
+            'not to ignore': 'That is the question'
+        },
+        {
+            'even type does not matter': {},
+            'not to ignore': 'That is the question'
+        },
+        ignore=['To ignore this key', 'even type does not matter']
+    )
