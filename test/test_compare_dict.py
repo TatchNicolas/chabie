@@ -78,42 +78,45 @@ def test_basics():
     )
 
 
-def test_ignore():
+def test_keys():
     assert chabie.compare_dicts(
-        {'to_ignore': 'or', 'not_to_ignore': 'That is the question'},
-        {'to_ignore': 'OR', 'not_to_ignore': 'That is the question'},
-        ignore=['to_ignore']
+        {'To ignore case': 'or', 'not to ignore': 'That is the question'},
+        {'To ignore case': 'OR', 'not to ignore': 'That is the question'},
+        keys={'To ignore case': lambda a, b: a.casefold() == b.casefold()}
     )
     assert chabie.compare_dicts(
-        {'to_ignore': None, 'not_to_ignore': 'That is the question'},
-        {'to_ignore': 'None', 'not_to_ignore': 'That is the question'},
-        ignore=['to_ignore']
+        {'To ignore': None, 'not to ignore': 'That is the question'},
+        {'To ignore': 'None', 'not to ignore': 'That is the question'},
+        keys={'To ignore': lambda a, b: True}
     )
     assert chabie.compare_dicts(
-        {
-            'to_ignore': 'Different depth of dict',
-            'not_to_ignore': 'That is the question'
-        },
-        {
-            'to_ignore': {'nested in b': [1, 2, 3]},
-            'not_to_ignore': 'That is the question'
-        },
-        ignore=['to_ignore']
-    )
-    assert chabie.compare_dicts(
-        {'to_ignore': 'or', 'not_to_ignore': 'That is the question'},
-        {'not_to_ignore': 'That is the question'},
-        ignore=['to_ignore']
+        {'assert length of list': [1, 2, 3]},
+        {'assert length of list': ['one', 'two', 'three']},
+        keys={'assert length of list': lambda a, b: len(a) == len(b)}
     )
 
 
-def test_cmps():
+def test_types():
     assert chabie.compare_dicts(
         {'strings': 'Given the named argument below'},
         {'strings': 'will be regarded as equal whatever the values are'},
-        cmps={str: lambda a, b: True}
+        types={str: lambda a, b: True}
+    )
+    assert chabie.compare_dicts(
+        {
+            'int rounded': 6,
+            'float rounded': 1.23
+        },
+        {
+            'int rounded': 7,
+            'float rounded': 1.23
+        },
+        types={
+            int: lambda a, b: round(a, -1) == round(b, -1),
+            float: lambda a, b: round(a) == round(b)
+        }
     )
 
 
-def test_combinations():
-    assert False
+# def test_combinations():
+#     assert False
