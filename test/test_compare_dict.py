@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from chabie import chabie
 
 
@@ -53,28 +55,16 @@ def test_basics():
     )
     assert not chabie.compare_dicts(
         {
-            'nested_list_1': [1, 2, 3],
-            'nested_list_2': [
-                {'dict_in_list_1': True},
-                {'dict_in_list_2': 'foo'},
-            ],
-            'nested_dict_1': {'key_1': 'value_1'},
-            'nested_dict_2': [
-                'yi', 'er', 'san'
-            ],
+            'some list': [1, 2, 3],
             'This key not in the second dict': 'So returns false'
         },
         {
-            'nested_list_1': [1, 2, 3],
-            'nested_list_2': [
-                {'dict_in_list_1': True},
-                {'dict_in_list_2': 'foo'},
-            ],
-            'nested_dict_1': {'key_1': 'value_1'},
-            'nested_dict_2': [
-                'yi', 'er', 'san'
-            ],
+            'some list': [1, 2, 3],
         }
+    )
+    assert not chabie.compare_dicts(
+        {'some list': [1, 2, 3]},
+        {'some list': [1, 2, 3, 4]}
     )
 
 
@@ -115,6 +105,12 @@ def test_types():
             int: lambda a, b: round(a, -1) == round(b, -1),
             float: lambda a, b: round(a) == round(b)
         }
+    )
+    assert chabie.compare_dicts(
+        {'date': datetime(2000, 3, 3, 10, 0, 0)},
+        {'date': datetime(2000, 3, 3, 10, 0, 0, 500)},
+        # Within a second
+        types={datetime: lambda a, b: a-b < timedelta(0, 1)}
     )
 
 

@@ -9,6 +9,7 @@ name = "pypi"
 "flake8" = "*"
 jedi = "*"
 pytest = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.6"
