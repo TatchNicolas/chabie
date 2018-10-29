@@ -10,6 +10,7 @@ name = "pypi"
 jedi = "*"
 pytest = "*"
 coverage = "*"
+sphinx = "*"
 
 [requires]
 python_version = "3.6"
