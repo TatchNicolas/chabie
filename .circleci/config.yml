@@ -6,3 +6,9 @@ jobs:
     steps:
       - checkout # check out the code in the project directory
       - run: echo "hello world" # run the `echo` command
+  test:
+    docker: 
+      - image: circleci/python3.6.5
+    steps:
+      - checkout # check out the code in the project directory
+      - run: ls
