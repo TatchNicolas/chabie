@@ -106,6 +106,13 @@ def test_types():
             float: lambda a, b: round(a) == round(b)
         }
     )
+
+    assert not chabie.compare_dicts(
+        {'to fail': 100},
+        {'to fail': 105},
+        # integer elements accept difference less than 3
+        types={int: lambda a, b: abs(a-b) < 3}
+    )
     assert chabie.compare_dicts(
         {'date': datetime(2000, 3, 3, 10, 0, 0)},
         {'date': datetime(2000, 3, 3, 10, 0, 0, 500)},
