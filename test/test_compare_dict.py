@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from chabie import chabie
+from chabie import chabie, key
 
 
 def test_basics():
@@ -132,4 +132,15 @@ def test_ignore():
             'not to ignore': 'That is the question'
         },
         ignore=['To ignore this key', 'even type does not matter']
+    )
+
+
+def test_utility_keys():
+    assert chabie.compare_dicts(
+        {'foo': 123}, {'foo': 456},
+        keys={'foo': key.always_true}
+    )
+    assert not chabie.compare_dicts(
+        {'foo': 123}, {'foo': 123},
+        keys={'foo': key.always_false}
     )
