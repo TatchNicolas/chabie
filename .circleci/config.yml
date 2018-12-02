@@ -29,13 +29,8 @@ jobs:
             pipenv install --dev
             pipenv run pip freeze
       - run:
-          name: Verify git tag vs. version
+          name: Verify version and tag
           command: |
-            if [ $CIRCLE_BRANCH = "stage" ]; then
-              export CIRCLE_TAG=$CIRCLE_WORKFLOW_ID
-            fi
-            echo $CIRCLE_TAG
-            echo $CIRCLE_BRANCH
             pipenv run python setup.py verify
       - run:
           name: Create package
@@ -44,17 +39,8 @@ jobs:
       - run:
           name: Set environment variables
           command: |
-            if [ $CIRCLE_BRANCH = "stage" ]; then
-              export TWINE_USERNAME=$PYPI_USERNAME_STG
-              export TWINE_PASSWORD=$PYPI_PASSWORD_STG
-              export TWINE_REPOSITORY_URL=https://test.pypi.org/legacy/
-            elif [ $CIRCLE_BRANCH = "master" ]; then
-              export TWINE_USERNAME=$PYPI_USERNAME_PRD
-              export TWINE_PASSWORD=$PYPI_PASSWORD_PRD
-            else
-              echo 'Invalid branch name'
-              exit 1
-            fi
+            export TWINE_USERNAME=$PYPI_USERNAME_PRD
+            export TWINE_PASSWORD=$PYPI_PASSWORD_PRD
       - run:
           name: Upload to PyPI
           command: |
@@ -67,14 +53,6 @@ workflows:
           filters:
             branches:
               only: /.*/
-            tags:
-              only: /.*/
-      - build:
-          requires:
-            - test
-          filters:
-            branches:
-              only: /(stage|master)/
             tags:
               only: /.*/
       - deploy:
