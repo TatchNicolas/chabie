@@ -128,7 +128,7 @@ def test_ignore():
             'not to ignore': 'That is the question'
         },
         {
-            'even type does not matter': {},
+            'even type does not matter': {'here comes a nested value': None},
             'not to ignore': 'That is the question'
         },
         ignore=['To ignore this key', 'even type does not matter']
