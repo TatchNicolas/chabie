@@ -44,7 +44,7 @@ jobs:
       - run:
           name: Upload to PyPI
           command: |
-            pipenv run twine upload
+            pipenv run twine upload dist/*
 workflows:
   version: 2
   test_and_build:
