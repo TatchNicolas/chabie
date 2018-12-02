@@ -57,7 +57,7 @@ workflows:
               only: /.*/
       - deploy:
           requires:
-            - build
+            - test
           filters:
             branches:
               ignore: /.*/
