@@ -31,6 +31,7 @@ jobs:
       - run:
           name: verify git tag vs. version
           command: |
+            echo $CIRCLE_TAG
             pipenv run python setup.py verify
       - run:
           name: create package
