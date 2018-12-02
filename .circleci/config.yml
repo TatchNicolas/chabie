@@ -10,12 +10,12 @@ jobs:
           command: |
             ls
             pip install pipenv
-            pipenv install --dev --system
-            pip freeze
+            pipenv install --dev
+            pipenv run pip freeze
       - run: 
           name: run pytest
           command: |
-            pytest
+            pipenv run pytest
   build:
     docker: 
       - image: circleci/python:3.6.5
@@ -26,16 +26,16 @@ jobs:
           command: |
             ls
             pip install pipenv
-            pipenv install --dev --system
-            pip freeze
+            pipenv install --dev
+            pipenv run pip freeze
       - run:
           name: verify git tag vs. version
           command: |
-            python setup.py verify
+            pipenv run python setup.py verify
       - run:
           name: create package
           command: |
-            python setup.py sdist bdist_wheel
+            pipenv run python setup.py sdist bdist_wheel
 workflows:
   version: 2
   build_and_test:
