@@ -16,7 +16,7 @@ jobs:
           name: Run pytest
           command: |
             pipenv run pytest
-  build:
+  deploy:
     docker: 
       - image: circleci/python:3.6.5
     steps:
@@ -29,20 +29,18 @@ jobs:
             pipenv install --dev
             pipenv run pip freeze
       - run:
-          name: Create package
-          command: |
-            pipenv run python setup.py sdist bdist_wheel
-  deploy:
-    docker: 
-      - image: circleci/python:3.6.5
-    steps:
-      - checkout # check out the code in the project directory
-      - run:
           name: Verify git tag vs. version
           command: |
+            if [ $CIRCLE_BRANCH = "stage" ]; then
+              export CIRCLE_TAG=$CIRCLE_WORKFLOW_ID
+            fi
             echo $CIRCLE_TAG
             echo $CIRCLE_BRANCH
             pipenv run python setup.py verify
+      - run:
+          name: Create package
+          command: |
+            pipenv run python setup.py sdist bdist_wheel
       - run:
           name: Set environment variables
           command: |
@@ -84,6 +82,6 @@ workflows:
             - build
           filters:
             branches:
-              only: /(stage|master)/
+              ignore: /.*/
             tags:
               only: /^(0|[1-9]\d*)(\.(0|[1-9]\d*)){2}$/ 
