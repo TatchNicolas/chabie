@@ -81,8 +81,7 @@ workflows:
               only: /.*/
       - deploy:
           requires:
-            - test
-            - deploy
+            - build
           filters:
             branches:
               only: /(stage|master)/
