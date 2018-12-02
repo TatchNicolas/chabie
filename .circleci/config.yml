@@ -52,5 +52,7 @@ workflows:
           requires:
             - test
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /^(0|[1-9]\d*)(\.(0|[1-9]\d*)){2}$/ 
