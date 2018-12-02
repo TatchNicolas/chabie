@@ -41,10 +41,11 @@ jobs:
           command: |
             export TWINE_USERNAME=$PYPI_USERNAME_PRD
             export TWINE_PASSWORD=$PYPI_PASSWORD_PRD
+            echo $TWINE_USERNAME
       - run:
           name: Upload to PyPI
           command: |
-            pipenv run twine upload
+            pipenv run twine upload dist/*
 workflows:
   version: 2
   test_and_build:
