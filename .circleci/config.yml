@@ -37,14 +37,11 @@ jobs:
           command: |
             pipenv run python setup.py sdist bdist_wheel
       - run:
-          name: Set environment variables
+          name: Upload to PyPI
           command: |
             export TWINE_USERNAME=$PYPI_USERNAME_PRD
             export TWINE_PASSWORD=$PYPI_PASSWORD_PRD
             echo $TWINE_USERNAME
-      - run:
-          name: Upload to PyPI
-          command: |
             pipenv run twine upload dist/*
 workflows:
   version: 2
