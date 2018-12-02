@@ -32,7 +32,9 @@ jobs:
           name: verify git tag vs. version
           command: |
             export CIRCLE_TAG=0.3.7
+            echo $CI
             echo $CIRCLE_TAG
+            echo $CIRCLE_BRANCH
             pipenv run python setup.py verify
       - run:
           name: create package
