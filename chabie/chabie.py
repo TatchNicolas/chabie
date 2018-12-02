@@ -9,10 +9,7 @@ def compare_dicts(
         a: Dict, b: Dict,
         keys: Key = {}, types: Types = {}, ignore: list = []) -> bool:
 
-    if type(a) != type(b):
-        return False
-
-    if isinstance(a, dict):
+    if isinstance(a, dict) and isinstance(b, dict):
         for dict_to_comp in a, b:
             for key_to_ignore in ignore:
                 if key_to_ignore in dict_to_comp:
@@ -20,11 +17,14 @@ def compare_dicts(
         if not sorted(a.keys()) == sorted(b.keys()):
             return False
         return all(
-            [compare_dicts(a[key], b[key], keys, types, ignore)
-             for key in a.keys() if key not in keys]
+            [
+                keys[key](a[key], b[key]) if key in keys
+                else compare_dicts(a[key], b[key], keys, types, ignore)
+                for key in a.keys()
+            ]
         )
 
-    if isinstance(a, list):
+    if isinstance(a, list) and isinstance(b, list):
         if len(a) != len(b):
             return False
         return all(
