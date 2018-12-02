@@ -13,6 +13,5 @@ pip install chabie
 
 ## TODO
 
-- Implement built-in keys(functions) to compare:
-      - datetime with given accuracy(by second, minute or date)
-      - number with given precision
+- Setup CI/CD
+- utility comparison keys

@@ -1,23 +1,46 @@
 version: 2
 jobs:
-  build:
-    docker: 
-      - image: circleci/node:4.8.2
-    steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
   test:
     docker: 
       - image: circleci/python:3.6.5
     steps:
       - checkout # check out the code in the project directory
-      - run: ls
-      - run: pip install pipenv
-      - run: pipenv install --dev
-      - run: pipenv run pytest
+      - run: 
+          name: basic setup
+          command: |
+            ls
+            pip install pipenv
+            pipenv install --dev --system
+            pip freeze
+      - run: 
+          name: run pytest
+          command: |
+            pytest
+  build:
+    docker: 
+      - image: circleci/python:3.6.5
+    steps:
+      - checkout # check out the code in the project directory
+      - run: 
+          name: basic setup
+          command: |
+            ls
+            pip install pipenv
+            pipenv install --dev --system
+            pip freeze
+      - run:
+          name: verify git tag vs. version
+          command: |
+            python setup.py verify
+      - run:
+          name: create package
+          command: |
+            python setup.py sdist bdist_wheel
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
       - test
+      - build:
+          requires:
+            - test
