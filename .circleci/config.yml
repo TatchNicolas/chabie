@@ -29,21 +29,20 @@ jobs:
             pipenv install --dev
             pipenv run pip freeze
       - run:
-          name: Verify git tag vs. version
-          command: |
-            echo $CIRCLE_TAG
-            echo $CIRCLE_BRANCH
-            pipenv run python setup.py verify
-      - run:
           name: Create package
           command: |
             pipenv run python setup.py sdist bdist_wheel
-            pipenv run twine upload
   deploy:
     docker: 
       - image: circleci/python:3.6.5
     steps:
       - checkout # check out the code in the project directory
+      - run:
+          name: Verify git tag vs. version
+          command: |
+            echo $CIRCLE_TAG
+            echo $CIRCLE_BRANCH
+            pipenv run python setup.py verify
       - run:
           name: Set environment variables
           command: |
